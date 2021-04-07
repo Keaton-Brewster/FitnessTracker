@@ -14,11 +14,11 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(express.static('public'));
 
-// const uri = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@cluster0.baqrb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-// const client = new MongoClient(uri, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// });
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/workout', {
