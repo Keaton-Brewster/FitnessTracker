@@ -3,12 +3,12 @@ const db = require('../models');
 module.exports = (app) => {
     app.get('/api/workouts', (request, response) => {
         db.Workouts.aggregate([{
-            $addFields: {
-                totalDuration: {
-                    $sum: '$exercises.duration'
+                $addFields: {
+                    totalDuration: {
+                        $sum: '$exercises.duration'
+                    }
                 }
-            }
-        }])
+            }])
             .then(workouts => response.json(workouts))
             .catch(error => response.error(error));
     })
@@ -17,41 +17,17 @@ module.exports = (app) => {
         const exercise = request.body;
         console.log(exercise);
 
-        // switch the type of the exercise so we know which model to add it to
-        switch (request.body.type) {
-            case 'cardio':
-                // const Cardio = await db.Cardio.create(exercise)
-                //     .catch(e => {
-                //         throw new Error(e)
-                //     });
-                await db.Workouts.update({
-                        _id: request.params.id
-                    }, {
-                        $push: {
-                            'exercises': exercise
-                        }
-                    })
-                    .catch(e => {
-                        throw new Error(e)
-                    })
-                break;
-            case 'resistance':
-                // const Resistance = await db.Resistance.create(exercise)
-                //     .catch(e => {
-                //         return new Error(e)
-                //     });
-                await db.Workouts.update({
-                        _id: request.params.id
-                    }, {
-                        $push: {
-                            'exercises': exercise
-                        }
-                    })
-                    .catch(e => {
-                        throw new Error(e)
-                    })
-                break;
-        }
+
+        await db.Workouts.update({
+                _id: request.params.id
+            }, {
+                $push: {
+                    'exercises': exercise
+                }
+            })
+            .catch(e => {
+                throw new Error(e)
+            })
 
         response.json({
             "working": "true"
