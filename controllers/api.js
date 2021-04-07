@@ -3,9 +3,9 @@ const db = require('../models');
 
 module.exports = (app) => {
     // This route handles the home page request for the most recent workout
-    app.get('/api/workouts', (request, response) => {
+    app.get('/api/workouts', async (request, response) => {
         // We have to aggregate so that the total duration of all exercises in the workout gets added as a field
-        db.Workouts.aggregate([{
+        await db.Workouts.aggregate([{
                 $addFields: {
                     totalDuration: {
                         $sum: '$exercises.duration'
@@ -50,8 +50,8 @@ module.exports = (app) => {
 
     });
 
-    app.post('/api/workouts', (request, response) => {
-        db.Workouts.create(request.body)
+    app.post('/api/workouts', async (request, response) => {
+        await db.Workouts.create(request.body)
             .then(result => response.json(result))
             .catch(error => {
                 throw new Error(`Something went wrong /controllers/api::57 ==> ${error}`)
