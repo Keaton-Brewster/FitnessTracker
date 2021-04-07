@@ -11,7 +11,22 @@ module.exports = (app) => {
             }])
             .then(workouts => response.json(workouts))
             .catch(error => response.error(error));
-    })
+    });
+
+    app.get('/api/workouts/range', async (request, response) => {
+        let d = new Date();
+        d.setDate(d.getDate() - 7);
+
+        await db.Workouts.find({
+                day: {
+                    $gte: d
+                }
+            })
+            .then(result => response.json(result))
+            .catch(e => {
+                throw new Error(e);
+            });
+    });
 
     app.put('/api/workouts/:id', async (request, response) => {
         const exercise = request.body;
@@ -32,11 +47,11 @@ module.exports = (app) => {
         response.json({
             "working": "true"
         });
-    })
+    });
 
     app.post('/api/workouts', (request, response) => {
         db.Workouts.create(request.body)
             .then(result => response.json(result))
             .catch(error => response.error(error));
-    })
-}
+    });
+};
