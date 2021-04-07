@@ -1,7 +1,10 @@
+// Set up access to Database
 const db = require('../models');
 
 module.exports = (app) => {
+    // This route handles the home page request for the most recent workout
     app.get('/api/workouts', (request, response) => {
+        // We have to aggregate so that the total duration of all exercises in the workout gets added as a field
         db.Workouts.aggregate([{
                 $addFields: {
                     totalDuration: {
@@ -10,7 +13,9 @@ module.exports = (app) => {
                 }
             }])
             .then(workouts => response.json(workouts))
-            .catch(error => response.error(error));
+            .catch(error => {
+                throw new Error(`Something went wrong /controllers/api::17 ==> ${error}`)
+            });
     });
 
     app.get('/api/workouts/range', async (request, response) => {
@@ -23,15 +28,13 @@ module.exports = (app) => {
                 }
             })
             .then(result => response.json(result))
-            .catch(e => {
-                throw new Error(e);
+            .catch(error => {
+                throw new Error(`Something went wrong /controllers/api::32 ==> ${error}`);
             });
     });
 
     app.put('/api/workouts/:id', async (request, response) => {
         const exercise = request.body;
-        console.log(exercise);
-
 
         await db.Workouts.update({
                 _id: request.params.id
@@ -40,18 +43,18 @@ module.exports = (app) => {
                     'exercises': exercise
                 }
             })
-            .catch(e => {
-                throw new Error(e)
+            .then(update => response.json(update))
+            .catch(error => {
+                throw new Error(`Something went wrong /controllers/api::48 ==> ${error}`)
             })
 
-        response.json({
-            "working": "true"
-        });
     });
 
     app.post('/api/workouts', (request, response) => {
         db.Workouts.create(request.body)
             .then(result => response.json(result))
-            .catch(error => response.error(error));
+            .catch(error => {
+                throw new Error(`Something went wrong /controllers/api::57 ==> ${error}`)
+            });
     });
 };
