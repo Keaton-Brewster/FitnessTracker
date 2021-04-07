@@ -22,11 +22,21 @@ module.exports = (app) => {
         let d = new Date();
         d.setDate(d.getDate() - 7);
 
-        await db.Workouts.find({
-                day: {
-                    $gte: d
+        await db.Workouts.aggregate([{
+                    $match: {
+                        day: {
+                            $gte: d
+                        }
+                    }
+                },
+                {
+                    $addFields: {
+                        totalDuration: {
+                            $sum: '$exercises.duration'
+                        }
+                    }
                 }
-            })
+            ])
             .then(result => response.json(result))
             .catch(error => {
                 throw new Error(`Something went wrong /controllers/api::32 ==> ${error}`);
