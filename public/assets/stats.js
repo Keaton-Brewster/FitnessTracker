@@ -22,7 +22,6 @@ function generatePalette() {
 }
 
 function populateChart(data) {
-  console.log('/public//stats.js:25 arg DATA:', data);
   let durations = data.map(({
     totalDuration
   }) => totalDuration);

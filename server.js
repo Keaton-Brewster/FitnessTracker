@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dbConnect = require('./config');
 const PORT = process.env.PORT || 8080;
 const app = express();
 
@@ -18,6 +19,7 @@ require('./controllers/api')(app);
 require('./controllers/html')(app);
 
 try {
+    dbConnect();
     app.listen(PORT, async () => {
         console.log(`Listening on port ${PORT}.`);
     });
