@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const {
@@ -14,14 +15,18 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(express.static('public'));
 
-const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri, {
+const URI = process.env.MONGODB_URI;
+const client = new MongoClient(URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/workout', {
+mongoose.connect(URI || 'mongodb://localhost/workout', {
+    auth: {
+        user: process.env.MONGODB_USER,
+        password: process.env.MONGODB_PASS
+    },
     useNewUrlParser: true,
     useFindAndModify: true
 });
