@@ -21,7 +21,6 @@ const client = new MongoClient(URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-console.log(client);
 
 mongoose.connect(URI || 'mongodb://localhost/workout', {
     useNewUrlParser: true,
