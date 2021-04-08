@@ -58,7 +58,7 @@ module.exports = (app) => {
         const exercise = request.body;
 
 
-        if (workoutID === undefined) {
+        if (workoutID === 'undefined') {
             await db.Workouts.create({})
                 .then(document => {
                     document.update({
