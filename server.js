@@ -29,8 +29,7 @@ mongoose.connect(URI || 'mongodb://localhost/workout', {
         password: process.env.MONGODB_PASS
     },
     useNewUrlParser: true,
-    useFindAndModify: true,
-    useMongoClient: true
+    useFindAndModify: true
 });
 
 require('./controllers/api')(app);
