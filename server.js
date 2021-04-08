@@ -1,4 +1,5 @@
 require('dotenv').config();
+const compression = require('compression');
 const express = require('express');
 const mongoose = require('mongoose');
 const {
@@ -8,7 +9,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 
 
-
+app.use(compression());
 app.use(express.urlencoded({
     extended: true
 }));
