@@ -24,10 +24,6 @@ const client = new MongoClient(URI, {
 
 
 mongoose.connect(URI || 'mongodb://localhost/workout', {
-    auth: {
-        user: process.env.MONGODB_USER,
-        password: process.env.MONGODB_PASS
-    },
     useNewUrlParser: true,
     useFindAndModify: true,
     useUnifiedTopology: true
