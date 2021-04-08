@@ -44,20 +44,34 @@ module.exports = (app) => {
     });
 
     app.put('/api/workouts/:id', async (request, response) => {
+        const workoutID = request.params.id;
         const exercise = request.body;
 
-        await db.Workouts.update({
-                _id: request.params.id
-            }, {
-                $push: {
-                    'exercises': exercise
-                }
-            })
-            .then(update => response.json(update))
-            .catch(error => {
-                throw new Error(`Something went wrong /controllers/api::48 ==> ${error}`)
-            })
 
+        if (workoutID === undefined) {
+            await db.Workouts.create({})
+                .then(document => {
+                    document.update({
+                        $push: {
+                            'exercises': exercise
+                        }
+                    });
+                    document.save();
+                    response.json(document);
+                });
+        } else {
+            await db.Workouts.update({
+                    _id: request.params.id
+                }, {
+                    $push: {
+                        'exercises': exercise
+                    }
+                })
+                .then(update => response.json(update))
+                .catch(error => {
+                    throw new Error(`Something went wrong /controllers/api::48 ==> ${error}`)
+                })
+        }
     });
 
     app.post('/api/workouts', async (request, response) => {
