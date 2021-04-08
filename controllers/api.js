@@ -79,16 +79,21 @@ module.exports = (app) => {
                 })
                 .then(update => response.json(update))
                 .catch(error => {
-                    throw new Error(`Something went wrong /controllers/api::48 ==> ${error}`)
+                    throw new Error(`Something went wrong /controllers/api::82 ==> ${error}`)
                 })
         }
     });
 
     app.post('/api/workouts', async (request, response) => {
-        await db.Workouts.create(request.body)
-            .then(result => response.json(result))
-            .catch(error => {
-                throw new Error(`Something went wrong /controllers/api::57 ==> ${error}`)
-            });
+        try {
+            await db.Workouts.create({})
+                .then(result => response.json(result))
+                .catch(error => {
+                    throw new Error(`Something went wrong /controllers/api::57 ==> ${error}`)
+                });
+        } catch (error) {
+            response.json(error);
+            throw new Error(error);
+        }
     });
 };
