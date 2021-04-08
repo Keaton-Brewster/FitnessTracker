@@ -29,8 +29,14 @@ mongoose.connect(URI || 'mongodb://localhost/workout', {
         password: process.env.MONGODB_PASS
     },
     useNewUrlParser: true,
-    useFindAndModify: true
+    useFindAndModify: true,
+    useUnifiedTopology: true
 });
+
+mongoose.connection.on('connected', () => {
+    console.log(mongoose.connection);
+    console.log('mongoose connected')
+})
 
 require('./controllers/api')(app);
 require('./controllers/html')(app);
