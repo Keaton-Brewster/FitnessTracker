@@ -21,18 +21,13 @@ const client = new MongoClient(URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-
+console.log(client);
 
 mongoose.connect(URI || 'mongodb://localhost/workout', {
     useNewUrlParser: true,
     useFindAndModify: true,
     useUnifiedTopology: true
 });
-
-mongoose.connection.on('connected', () => {
-    console.log(mongoose.connection);
-    console.log('mongoose connected')
-})
 
 require('./controllers/api')(app);
 require('./controllers/html')(app);
