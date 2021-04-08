@@ -15,7 +15,8 @@ module.exports = (app) => {
                 }])
                 .then(workouts => response.json(workouts))
                 .catch(error => {
-                    throw new Error(`Something went wrong /controllers/api::17 ==> ${error}`)
+                    response.json(error);
+                    throw new Error(`Something went wrong /controllers/api::17 ==> ${error}`);
                 });
         } catch (error) {
             response.json(error);
