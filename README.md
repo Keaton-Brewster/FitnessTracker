@@ -18,6 +18,8 @@ This application is covered under the MIT license.
 
   ---
 
+## Link to [deployed app](https://fitnesstracker-nosql-kpb.herokuapp.com/)
+
  ## Images
 
  ![Screen Shot 2021-04-12 at 1 37 29 PM](https://user-images.githubusercontent.com/65474893/114444362-652f5d00-9b94-11eb-962a-1d93994c288c.png)
