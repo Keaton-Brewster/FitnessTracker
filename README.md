@@ -11,7 +11,7 @@
 
   ## Description
 
-A easy way to keep track of workouts, exercise by exercise, and see the culmination of all your work in one place.
+An easy way to keep track of workouts, exercise by exercise, and see the culmination of all your work in one place.
 
   ### <a id='license'></a>[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 This application is covered under the MIT license.
